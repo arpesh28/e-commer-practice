@@ -7,7 +7,6 @@
   }
 }
 ul {
-  display: flex;
 }
 ul li {
   margin: 20px;
@@ -17,4 +16,8 @@ ul li {
 }
 ul li img {
   max-height: 100px;
+}
+.product-card a {
+  background-color: white;
+  padding: 20px;
 }
