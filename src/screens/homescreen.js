@@ -16,7 +16,9 @@ function HomeScreen() {
   }, []);
   return (
     <div className="App">
-      <h1>Products</h1>
+      <h1>
+        Products <Link to="/add-product">Create a new product</Link>
+      </h1>
       <ul className="d-flex">
         {products.map((prod, index) => (
           <li className="product-card">
