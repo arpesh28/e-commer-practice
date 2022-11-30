@@ -2,7 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+//  Redux
+import { useSelector, useDispatch } from "react-redux";
+import { productsReceived } from "../redux/products";
+
 function HomeScreen() {
+  const productState = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+  console.log("products:", productState.products);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -11,7 +20,8 @@ function HomeScreen() {
       baseURL: "https://fakestoreapi.com",
       url: "/products",
     }).then((response) => {
-      setProducts(response.data);
+      dispatch(productsReceived(response.data));
+      // setProducts(response.data);
     });
   }, []);
   return (
@@ -20,7 +30,7 @@ function HomeScreen() {
         Products <Link to="/add-product">Create a new product</Link>
       </h1>
       <ul className="d-flex">
-        {products.map((prod, index) => (
+        {productState.products.map((prod, index) => (
           <li className="product-card">
             <div>
               <img src={prod.image} alt="" />
