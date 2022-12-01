@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+//  Redux
+import { useSelector, useDispatch } from "react-redux";
+import { productDetailsReceived } from "../redux/products";
+
 function ProductDetails() {
+  const dispatch = useDispatch();
+  const productDetails = useSelector((state) => state.products.productDetails);
+
   const [product, setProduct] = useState(null);
   const { id } = useParams();
 
@@ -12,18 +19,19 @@ function ProductDetails() {
       baseURL: "https://fakestoreapi.com",
       url: `/products/${id}`,
     }).then((response) => {
-      setProduct(response.data);
+      dispatch(productDetailsReceived(response.data));
+      // setProduct(response.data);
     });
   }, []);
-  console.log("product:", product);
+  console.log("product:", productDetails);
   return (
     <div className="App">
-      {product && (
+      {productDetails && (
         <>
-          <h1>{product.title}</h1>
-          <img src={product.image} alt="" />
-          <h4>{product.description}</h4>
-          <h3>${product.price}</h3>
+          <h1>{productDetails.title}</h1>
+          <img src={productDetails.image} alt="" />
+          <h4>{productDetails.description}</h4>
+          <h3>${productDetails.price}</h3>
         </>
       )}
     </div>

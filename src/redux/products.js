@@ -7,17 +7,17 @@ export const productSlice = createSlice({
     productDetails: null,
   },
   reducers: {
-    // blogsReceived: (state, action) => {
-    //   state.blogs = action.payload;
-    // },
     productsReceived: (state, action) => {
       state.products = action.payload;
+    },
+    productDetailsReceived: (state, action) => {
+      console.log("action:", action);
+      state.productDetails = action.payload;
     },
   },
 });
 
-// this is for dispatch
-export const { productsReceived } = productSlice.actions;
+export const { productsReceived, productDetailsReceived } =
+  productSlice.actions;
 
-// this is for configureStore
 export default productSlice.reducer;
