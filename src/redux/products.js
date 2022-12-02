@@ -11,13 +11,16 @@ export const productSlice = createSlice({
       state.products = action.payload;
     },
     productDetailsReceived: (state, action) => {
-      console.log("action:", action);
       state.productDetails = action.payload;
+    },
+    addProduct: (state, action) => {
+      console.log("action:", action.payload);
+      state.products = [...state.products, action.payload];
     },
   },
 });
 
-export const { productsReceived, productDetailsReceived } =
+export const { productsReceived, productDetailsReceived, addProduct } =
   productSlice.actions;
 
 export default productSlice.reducer;

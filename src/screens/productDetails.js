@@ -11,9 +11,11 @@ function ProductDetails() {
   const productDetails = useSelector((state) => state.products.productDetails);
 
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     axios({
       method: "GET",
       baseURL: "https://fakestoreapi.com",
@@ -21,18 +23,25 @@ function ProductDetails() {
     }).then((response) => {
       dispatch(productDetailsReceived(response.data));
       // setProduct(response.data);
+      setLoading(false);
     });
   }, []);
-  console.log("product:", productDetails);
+  console.log("loading:", loading);
   return (
     <div className="App">
-      {productDetails && (
-        <>
-          <h1>{productDetails.title}</h1>
-          <img src={productDetails.image} alt="" />
-          <h4>{productDetails.description}</h4>
-          <h3>${productDetails.price}</h3>
-        </>
+      {loading ? (
+        <h1 className="d-flex align-items-center justify-content-center">
+          Loading...
+        </h1>
+      ) : (
+        productDetails && (
+          <>
+            <h1>{productDetails.title}</h1>
+            <img src={productDetails.image} alt="" />
+            <h4>{productDetails.description}</h4>
+            <h3>${productDetails.price}</h3>
+          </>
+        )
       )}
     </div>
   );
