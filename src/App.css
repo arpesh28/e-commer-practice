@@ -21,3 +21,16 @@ ul li img {
   background-color: white;
   padding: 20px;
 }
+.dark {
+  background-color: black;
+}
+.dark h1 {
+  color: white;
+}
+.dark ul li {
+  background-color: #151515;
+}
+.dark .product-card h2,
+.dark .product-card h4 {
+  color: white;
+}
