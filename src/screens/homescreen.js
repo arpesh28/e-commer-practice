@@ -1,79 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import Card from "./card";
 import axios from "axios";
 
 //  Redux
 import { useSelector, useDispatch } from "react-redux";
 import { productsReceived } from "../redux/products";
-
 function HomeScreen() {
-  const productState = useSelector((state) => state.products);
+  const [loading, setLoading] = useState("Product");
+  const [page, setPage] = useState(1);
+
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products.data);
 
-  console.log("products:", productState.products);
+  const counterRef = useRef(0);
+  const inputRef = useRef();
+  const [name, setName] = useState("");
+  // const [count, setCount] = useState(0);
 
-  const [products, setProducts] = useState([]);
-
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios({
+  //     method: "GET",
+  //     baseURL: "https://api.storerestapi.com",
+  //     url: `/products}`,
+  //   }).then((response) => {
+  //     dispatch(productsReceived(response.data.data));
+  //     // setProduct(response.data);
+  //     setLoading(false);
+  //   });
+  // }, [page]);
   useEffect(() => {
-    axios({
-      method: "GET",
-      baseURL: "https://fakestoreapi.com",
-      url: "/products",
-    }).then((response) => {
-      dispatch(productsReceived(response.data));
-      // setProducts(response.data);
-    });
-  }, []);
-  const obj = { name: "arpesh", designation: "dev" };
-  console.log("local:", localStorage.getItem("theme"));
-  const theme = localStorage.getItem("theme");
-  console.log("theme:", theme);
+    counterRef.current = counterRef.current + 1;
+    // setCount(count + 1);
+  });
+  console.log("ref:", inputRef);
   return (
-    <div className={`App ${theme === "dark" ? "dark" : "light"}`}>
-      <h1>
-        Products <Link to="/add-product">Create a new product</Link>
-      </h1>
+    <>
+      <div className={`App container`}>
+        <h1>Products</h1>
+      </div>
+      <input
+        ref={inputRef}
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <h1>My name is {name}</h1>
+
+      <h1>I rendered {counterRef.current} times.</h1>
       <button
         onClick={(e) => {
-          // if (theme === "light" || theme === null) {
-          //   localStorage.setItem("theme", "dark");
-          // } else {
-          //   localStorage.setItem("theme", "light");
-          // }
-          localStorage.setItem("obj", JSON.stringify(obj));
-          // window.location.reload();
+          inputRef.current.focus();
         }}
       >
-        Toggle Theme
-      </button>{" "}
-      <button
-        onClick={(e) => {
-          // window.location.reload();
-          const obj2 = localStorage.getItem("obj");
-          const convertedObj = JSON.parse(obj2);
-          console.log("obj", convertedObj);
-        }}
-      >
-        Get obj
+        Focus
       </button>
-      <ul className="d-flex">
-        {productState.products.map((prod, index) => (
-          <li className="product-card">
-            <div>
-              <img src={prod.image} alt="" />
-              <h2>{prod.title}</h2>
-              <h4>${prod.price}</h4>
-              <Link
-                to={`/product-details/${prod.id}`}
-                className="product-card-button"
-              >
-                View Details
-              </Link>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </>
   );
 }
 

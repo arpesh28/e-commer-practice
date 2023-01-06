@@ -34,3 +34,15 @@ ul li img {
 .dark .product-card h4 {
   color: white;
 }
+.product-item {
+  background: #eaeaea;
+  padding: 20px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 4px 1px #00000029;
+  height: 100%;
+}
+.card {
+  margin-top: 100px;
+  background: #eaddf7 !important;
+  padding: 40px;
+}
